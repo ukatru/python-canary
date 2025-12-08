@@ -1,0 +1,26 @@
+---
+apiVersion: kpack.io/v1alpha2
+kind: ClusterBuilder
+metadata:
+  name: default
+spec:
+  serviceAccountRef:
+    name: kpack-service-account
+    namespace: kpack
+  tag: index.docker.io/ukatru/kpack-builder:latest  # Builder image (will be created by kpack)
+  stack:
+    name: base
+    kind: ClusterStack
+  store:
+    name: default
+    kind: ClusterStore
+  order:
+  - group:
+    - id: paketo-buildpacks/ca-certificates
+    - id: paketo-buildpacks/python
+    - id: paketo-buildpacks/pip
+    - id: paketo-buildpacks/pip-install
+    - id: paketo-buildpacks/python-start
+  - group:
+    - id: paketo-buildpacks/procfile
+      optional: true

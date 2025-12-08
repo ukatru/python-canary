@@ -1,0 +1,11 @@
+---
+apiVersion: kpack.io/v1alpha2
+kind: ClusterStack
+metadata:
+  name: base
+spec:
+  id: "io.buildpacks.stacks.jammy"
+  buildImage:
+    image: "docker.io/paketobuildpacks/build-jammy-base:latest"
+  runImage:
+    image: "docker.io/paketobuildpacks/run-jammy-base:latest"  # Standard run image (gets automatic security updates)

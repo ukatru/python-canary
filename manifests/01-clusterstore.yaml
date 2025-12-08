@@ -1,0 +1,20 @@
+---
+apiVersion: kpack.io/v1alpha2
+kind: ClusterStore
+metadata:
+  name: default
+spec:
+  sources:
+  # Paketo buildpacks for Python (using Docker Hub instead of deprecated GCR)
+  - image: docker.io/paketobuildpacks/python:latest
+  # Paketo buildpacks for pip
+  - image: docker.io/paketobuildpacks/pip:latest
+  # Paketo buildpacks for pip-install
+  - image: docker.io/paketobuildpacks/pip-install:latest
+  # Paketo buildpacks for python-start
+  - image: docker.io/paketobuildpacks/python-start:latest
+  # Paketo buildpacks for procfile
+  - image: docker.io/paketobuildpacks/procfile:latest
+  # Additional useful buildpacks
+  - image: docker.io/paketobuildpacks/ca-certificates:latest
+  - image: docker.io/paketobuildpacks/environment-variables:latest

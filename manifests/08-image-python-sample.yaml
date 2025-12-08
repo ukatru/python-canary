@@ -1,0 +1,36 @@
+---
+apiVersion: kpack.io/v1alpha2
+kind: Image
+metadata:
+  name: python-canary
+  namespace: kpack
+spec:
+  tag: index.docker.io/ukatru/python-canary:latest
+  serviceAccountName: kpack-service-account
+  builder:
+    name: default
+    kind: ClusterBuilder
+  source:
+    git:
+      url: https://github.com/ukatru/python-canary.git  # CHANGE THIS to your actual git repo
+      revision: master
+    subPath: app  # Path within the repo where the Python app is located
+  build:
+    env:
+    - name: BP_PYTHON_VERSION
+      value: "3.11.*"  # Specify Python version
+    - name: BP_KEEP_FILES
+      value: "requirements.txt:Procfile"
+    - name: SERVICE_BINDING_ROOT
+      value: "/platform/bindings"
+    - name: BP_EMBED_CERTS
+      value: "true"  # Embed CA certs into runtime image
+    services:
+    - kind: Secret
+      apiVersion: v1
+      name: ca-certificates-binding
+  # Optional: Configure cache (commented out - uncomment and set storageClassName if needed)
+  cache:
+    volume:
+      size: "50Gi"
+      storageClassName: "nfs-client"  # Change to your StorageClass name (e.g., gp2, gp3, standard)
